@@ -1,0 +1,322 @@
+/* 1.Mover mas arriba el cubo de basura */
+.centered {
+    justify-content: center;
+}
+
+.centered .form-control {
+    width: 100%;
+    max-width: 700px; /* Adjust this value as needed */
+}
+
+.URL{
+	width: 10px;
+}
+
+
+
+/* /* css del body */
+
+/*.selectDiv{
+	margin: 10px 0;
+	padding: 1rem;
+}
+*/
+
+.delete{
+	margin: 20px 0;
+}
+
+
+
+
+
+body {
+	font: 300 16px/1.5 'Roboto', sans-serif;
+	color: #000000;
+	background: #FF852D;
+	text-align: center;
+	
+
+  }
+  
+  .container {
+	max-width: 450px;
+	max-height: 650px;
+	padding-left: 0 150px;
+	padding-right: 0 150px;
+	border-radius: 12px;
+  	justify-content: center;
+ 	align-items: center;
+	margin: auto;
+
+  }
+
+
+h1 {
+	font-size: 20px;
+	font-weight: 300;
+	text-align: center;
+  }
+  
+  p {
+	margin: 0 50px 15px;
+  }
+
+/* h2{
+	text-align: center;
+} */
+  
+/* Quiza no sea necesario */
+.ID{
+	width: 25px;
+	text-align: center;
+	position: relative;
+	left: 140px;
+	top: 150px;
+} 
+
+/* Quiza no sea necesario */
+.Texto{
+	justify-content: flex-end;
+	width: 130px;
+	height: 100px;
+	vertical-align: top;
+	background: #CCCCCC;
+}
+
+
+  .todoBlock {
+	padding-top: 50px;
+	padding-left: 55px;
+	padding-right: 55px;
+	padding-bottom: 50px;
+	margin: 20px 0;
+	background: #fff;
+	box-shadow: 5px 5px 20px -5px rgba(0, 0, 0, 0.2);
+	border-radius: 25px;
+  }
+
+  .todoBlock2 {
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	margin: 10px 0;
+	background: #fff;
+	box-shadow: 5px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  .todoBlock .titleHolder {
+	margin: 0px 5px 25px;
+  }
+
+
+  .listHolder li {
+	/* counter-increment: step-counter;
+	overflow: hidden; */
+	padding: 0 30px 0px 20px;
+	position: relative;
+	bottom: 25px;
+  }
+/* css de los botones*/
+
+
+
+
+
+/* css de la caja de texto
+input[type="text"] {
+	width: 80%;
+	height: 30px;
+	border: 1px solid #ccc;
+	background: #fff;
+	padding: 10px;
+	font: 30 16px/1.5 'Roboto', sans-serif;
+	transition: border 0.3s linear;
+  }
+  
+ */
+
+
+/* css para el color del borde de la caja de texto
+input[type="text"]:focus {
+	border-color: #4ac7be;
+	outline: none;
+  }
+*/
+
+
+.btn-primary {
+	background: hsl(15, 84%, 54%);
+  border: none;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  min-width: 150px; /* O el valor que desees */
+  height: 50px;
+  color: #fff;
+  cursor: pointer;
+  font: 300 16px/1.5 'Roboto', sans-serif;
+  transition: background 0.3s linear;
+  margin-bottom: 1.0px;
+  text-align: center;
+  border-radius: 10px;
+	
+  }
+  
+
+
+  .btn-primary:hover {
+	background: #0889c5;
+  }
+  
+  .btn-primary:focus {
+	outline: none;
+  }
+  
+  .btn-icon {
+	background: none;
+	border: none;
+	display: inline-block;
+	vertical-align: top;
+	color: #333;
+	cursor: pointer;
+	transition: background 0.3s linear, color 0.3s linear;
+  }
+  
+  .btn-icon:focus {
+	outline: none;
+  }
+  
+  .btn-icon:before {
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+  }
+  
+
+
+/* css de los iconos de borrar*/
+
+
+.btn-icon.remove:before {
+	content: '\f2ed';
+  }
+
+
+/* css del scroll*/
+
+/* dropdown menu settings */
+select{
+	background-color: black;
+	color: aliceblue;
+	text-decoration: none;
+	padding: 10px 5px;
+	text-align: center;
+	margin: auto;
+}
+
+
+select option:checked{
+	background-color: #FF852D;
+}
+
+.verticalM > li{
+	float: left;
+}
+
+/* Organiza los dropdown buttons */
+.verticalM li ul {
+	display: none;
+	position: absolute;
+	left: 50%;
+	right: auto;
+	transform: translateX(-50%);
+}
+
+
+.verticalM li:hover > ul {
+	display: block;
+}
+
+/* .verticalM li ul li {
+	position: relative;
+} */
+
+.formHolder{
+	bottom: 30px;
+}
+
+.Tarea{
+	position: relative;
+	left: 40px;
+	bottom: 90px;
+	background:#CCCCCC;
+}
+
+
+.history-container {
+    padding: 20px;
+	margin: auto;
+	width: fit-content;
+	text-align: center;
+    justify-content: center;
+	flex-wrap: wrap;
+}
+
+.history-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.white-block {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Opcional: Agregar sombra */
+	margin:0 auto;
+	width: fit-content;
+   
+	
+}
+
+
+.back-button {
+    margin-top: 20px;
+	background: hsl(0, 65%, 44%);
+	border: none;
+	padding: 10px;
+	display: inline-block;
+	vertical-align: top;
+	align-content: center;
+	width: 50%;
+	height: 40px;
+	color: #fff;
+	cursor: pointer;
+	font: 300 16px/1.5 'Roboto', sans-serif;
+	transition: background 0.3s linear;
+	margin-bottom: 2.5px;
+}
+
+.download-button {
+	margin-top: 20px;
+	background: hsl(15, 84%, 54%);
+	border: none;
+	padding: 10px;
+	display: inline-block;
+	vertical-align: top;
+	align-content: center;
+	width: 50%;
+	height: 40px;
+	color: #fff;
+	cursor: pointer;
+	font: 300 16px/1.5 'Roboto', sans-serif;
+	transition: background 0.3s linear;
+	margin-bottom: 2.5px;
+}
+
+.center-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
