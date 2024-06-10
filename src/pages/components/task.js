@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, DropdownButton, Form, InputGroup, Row, Col, Button } from 'react-bootstrap';
 
-function Task({ task }) {
+function Task({ task, predictedelementinsert, setPredictedelementinsert}) {
   const [access, setAccess] = useState(task.access);
   const [accesstext, setAccesstext] = useState('Class'); // Adjusted default value
 
@@ -17,6 +17,13 @@ function Task({ task }) {
   const [quantitytext, setQuantitytext] = useState('Singular'); // Adjusted default value
 
   const [position, setPosition] = useState(task.position);
+
+  useEffect(() => {
+    if(predictedelementinsert === true){
+      setSelector(task.selector);
+      setPredictedelementinsert(false)
+    }
+  }, [task.selector]);
 
   useEffect(() => {
     task.access = access;

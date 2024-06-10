@@ -15,16 +15,17 @@ function Main() {
     const [currentView, setCurrentView] = useState('main');
     const [loading, setLoading] = useState(false);
     const [predicted_element, setPredictedelement] = useState(null);
+    const [predictedelementinsert, setPredictedelementinsert] = useState(false)
 
     // Create new Task
     const handleAddTask = () => {
         const newTask = {
             id: tasks.length + 1,
-            access: '',
+            access: 'class',
             selector: '',
-            action: '',
+            action: 'add_text',
             text: '',
-            quantity: '',
+            quantity: 'singular',
             position: 0
         };
         setTasks([...tasks, newTask]);
@@ -39,6 +40,7 @@ function Main() {
 
     // Run Tasks
     const handleRunTasks = () => {
+        // setPredictedelement(null)
         setLoading(true);
         let pythonfile = [];
         for (let task of tasks) {
@@ -52,6 +54,7 @@ function Main() {
             }
             pythonfile.push(temp);
         }
+        console.log(pythonfile)
         const url = `http://localhost:5000/makeTest`;
         const data = {
             url: pageUrl,
@@ -84,8 +87,8 @@ function Main() {
     const handleCloseModal = () => setShowModal(false);
 
     const handleApplyPrediction = () => {
-        if (predicted_element && predicted_element.step) {
-            const stepIndex = predicted_element.step - 1;
+        if (predicted_element && predicted_element.task) {
+            const stepIndex = predicted_element.task - 1;
             const updatedTasks = [...tasks]; // Create a copy of the tasks array
     
             if (predicted_element[updatedTasks[stepIndex].access]) {
@@ -93,6 +96,7 @@ function Main() {
             }
     
             setTasks(updatedTasks); // Update the state with the new tasks array
+            setPredictedelementinsert(true)
         }
         setShowModal(false);
     };
@@ -138,7 +142,7 @@ function Main() {
                         <div className="todoBlock">
                             <div className="todoList">
                                 {tasks.map((task) => (
-                                    <Task key={task.id} task={task} />
+                                    <Task key={task.id} task={task} predictedelementinsert={predictedelementinsert} setPredictedelementinsert={setPredictedelementinsert}/>
                                 ))}
                                 <br /><br />
                             </div>
@@ -172,9 +176,11 @@ function Main() {
                         <Button variant="secondary" onClick={handleCloseModal}>
                             Close
                         </Button>
-                        <Button variant="secondary" onClick={handleApplyPrediction}>
-                            Apply Prediction
-                        </Button>
+                        {response !== 'Test Ran Successfully' && predicted_element && (
+                            <Button variant="secondary" onClick={handleApplyPrediction}>
+                                Apply Prediction
+                            </Button>
+                        )}
                     </Modal.Footer>
                 </Modal>
             </Container>
