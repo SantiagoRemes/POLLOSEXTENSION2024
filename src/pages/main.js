@@ -84,16 +84,17 @@ function Main() {
     const handleCloseModal = () => setShowModal(false);
 
     const handleApplyPrediction = () => {
-        if (predicted_element) {
-            setTasks(tasks.map(task => {
-                if (predicted_element[task.access]) {
+        if (predicted_element && predicted_element.step) {
+            const stepIndex = predicted_element.step - 1;
+            setTasks(tasks.map((task, index) => {
+                if (index === stepIndex && predicted_element[task.access]) {
                     return { ...task, selector: predicted_element[task.access] };
                 }
                 return task;
             }));
         }
         setShowModal(false);
-    };
+    };    
 
     const switchView = (view) => {
         setCurrentView(view);
