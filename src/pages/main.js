@@ -86,16 +86,17 @@ function Main() {
     const handleApplyPrediction = () => {
         if (predicted_element && predicted_element.step) {
             const stepIndex = predicted_element.step - 1;
-            setTasks(tasks.map((task, index) => {
-                if (index === stepIndex && predicted_element[task.access]) {
-                    return { ...task, selector: predicted_element[task.access] };
-                }
-                return task;
-            }));
+            const updatedTasks = [...tasks]; // Create a copy of the tasks array
+    
+            if (predicted_element[updatedTasks[stepIndex].access]) {
+                updatedTasks[stepIndex].selector = predicted_element[updatedTasks[stepIndex].access];
+            }
+    
+            setTasks(updatedTasks); // Update the state with the new tasks array
         }
         setShowModal(false);
-    };    
-
+    };
+    
     const switchView = (view) => {
         setCurrentView(view);
     };

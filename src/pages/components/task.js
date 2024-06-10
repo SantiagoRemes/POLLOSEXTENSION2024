@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, DropdownButton, Form, InputGroup, Row, Col, Button } from 'react-bootstrap';
 
-function Task({ task, predicted_element }) {
+function Task({ task }) {
   const [access, setAccess] = useState('class');
   const [accesstext, setAccesstext] = useState('Class');
   const [selector, setSelector] = useState('');
