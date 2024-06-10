@@ -3,15 +3,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, DropdownButton, Form, InputGroup, Row, Col, Button } from 'react-bootstrap';
 
 function Task({ task }) {
-  const [access, setAccess] = useState('class');
-  const [accesstext, setAccesstext] = useState('Class');
-  const [selector, setSelector] = useState('');
-  const [action, setAction] = useState('add_text');
-  const [actiontext, setActiontext] = useState('Add Text');
-  const [text, setText] = useState('');
-  const [quantity, setQuantity] = useState('singular');
-  const [quantitytext, setQuantitytext] = useState('Singular');
-  const [position, setPosition] = useState(0);
+  const [access, setAccess] = useState(task.access);
+  const [accesstext, setAccesstext] = useState('Class'); // Adjusted default value
+
+  const [selector, setSelector] = useState(task.selector);
+
+  const [action, setAction] = useState(task.action);
+  const [actiontext, setActiontext] = useState('Add Text'); // Adjusted default value
+
+  const [text, setText] = useState(task.text);
+
+  const [quantity, setQuantity] = useState(task.quantity);
+  const [quantitytext, setQuantitytext] = useState('Singular'); // Adjusted default value
+
+  const [position, setPosition] = useState(task.position);
 
   useEffect(() => {
     task.access = access;
@@ -37,20 +42,14 @@ function Task({ task }) {
     task.position = position;
   }, [position]);
 
-  useEffect(() => {
-    if (predicted_element && predicted_element[access]) {
-      setSelector(predicted_element[access]);
-    }
-  }, [predicted_element, access]);
-
   const handleSelectAccess = (eventKey, event) => {
     setAccess(event.target.getAttribute('value'));
-    setAccesstext(eventKey)
+    setAccesstext(eventKey);
   };
 
   const handleSelectAction = (eventKey, event) => {
     setAction(event.target.getAttribute('value'));
-    setActiontext(eventKey)
+    setActiontext(eventKey);
   };
 
   const handleSelectQuantity = (eventKey, event) => {
@@ -58,10 +57,9 @@ function Task({ task }) {
     setQuantitytext(eventKey);
   };
 
-
   return (
     <div>
-      <h2>Task{task.id}</h2>
+      <h2>Task {task.id}</h2>
       <InputGroup className="mb-3">
         <Row>
           <Col>
@@ -80,11 +78,15 @@ function Task({ task }) {
               <Dropdown.Item eventKey="XPath" value="xpath">XPath</Dropdown.Item>
             </DropdownButton>
           </Col>
-        
-         <Form.Control aria-label="Select Selector" placeholder='[Insert Selector]' onChange={e => setSelector(e.target.value)} />
+          <Form.Control
+            aria-label="Select Selector"
+            placeholder='[Insert Selector]'
+            value={selector} // Controlled input
+            onChange={e => setSelector(e.target.value)}
+          />
         </Row>
       </InputGroup>
-      
+
       <InputGroup className="mb-3">
         <Row>
           <Col>
@@ -94,20 +96,19 @@ function Task({ task }) {
               id="Texto"
               onSelect={handleSelectAction}
             >
-              
               <Dropdown.Item eventKey="Add Text" value="add_text">Add Text</Dropdown.Item>
               <Dropdown.Item eventKey="Click Element" value="click_element">Click Element</Dropdown.Item>
             </DropdownButton>
           </Col>
           {actiontext === 'Add Text' && (
-          
-          <Form.Control
-            aria-label="Add Text"
-            placeholder='[Insert Text]'
-            onChange={e => setText(e.target.value)}
-          />
-        )}
-      </Row>
+            <Form.Control
+              aria-label="Add Text"
+              placeholder='[Insert Text]'
+              value={text} // Controlled input
+              onChange={e => setText(e.target.value)}
+            />
+          )}
+        </Row>
       </InputGroup>
 
       <Row className="mb-3">
@@ -123,21 +124,16 @@ function Task({ task }) {
           </DropdownButton>
         </Col>
         {quantitytext === 'Multiple' && (
-          
-            <Form.Control
-              aria-label="Additional Input"
-              placeholder='[Posición]'
-              onChange={e => setPosition(e.target.value)}
-            />
-          
+          <Form.Control
+            aria-label="Additional Input"
+            placeholder='[Posición]'
+            value={position} // Controlled input
+            onChange={e => setPosition(e.target.value)}
+          />
         )}
       </Row>
-
-       {/*<Button className="delete" variant="danger" onClick={handleDelete}>Delete Task {task.id}</Button>*/}
-      
     </div>
-    
-  );<br></br>
+  );
 }
 
 export default Task;
