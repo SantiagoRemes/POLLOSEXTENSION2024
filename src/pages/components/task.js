@@ -2,20 +2,15 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, DropdownButton, Form, InputGroup, Row, Col, Button } from 'react-bootstrap';
 
-function Task({ task, onDelete }) {
+function Task({ task, predicted_element }) {
   const [access, setAccess] = useState('class');
   const [accesstext, setAccesstext] = useState('Class');
-
   const [selector, setSelector] = useState('');
-
   const [action, setAction] = useState('add_text');
   const [actiontext, setActiontext] = useState('Add Text');
-
   const [text, setText] = useState('');
-
   const [quantity, setQuantity] = useState('singular');
   const [quantitytext, setQuantitytext] = useState('Singular');
-
   const [position, setPosition] = useState(0);
 
   useEffect(() => {
@@ -42,6 +37,12 @@ function Task({ task, onDelete }) {
     task.position = position;
   }, [position]);
 
+  useEffect(() => {
+    if (predicted_element && predicted_element[access]) {
+      setSelector(predicted_element[access]);
+    }
+  }, [predicted_element, access]);
+
   const handleSelectAccess = (eventKey, event) => {
     setAccess(event.target.getAttribute('value'));
     setAccesstext(eventKey)
@@ -57,9 +58,6 @@ function Task({ task, onDelete }) {
     setQuantitytext(eventKey);
   };
 
-  //const handleDelete = () => {
-    //onDelete(task.id);
-  //};
 
   return (
     <div>

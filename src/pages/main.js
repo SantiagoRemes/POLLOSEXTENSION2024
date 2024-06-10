@@ -12,8 +12,8 @@ function Main() {
     const [ipAddress, setIPAddress] = useState('');
     const [response, setResponse] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [currentView, setCurrentView] = useState('main'); // Estado para la vista actual
-    const [loading, setLoading] = useState(false); // State for loading status
+    const [currentView, setCurrentView] = useState('main');
+    const [loading, setLoading] = useState(false);
     const [predicted_element, setPredictedelement] = useState(null);
 
     // Create new Task
@@ -39,7 +39,7 @@ function Main() {
 
     // Run Tasks
     const handleRunTasks = () => {
-        setLoading(true); // Set loading to true when the test execution starts
+        setLoading(true);
         let pythonfile = [];
         for (let task of tasks) {
             let { access, selector, action, text, quantity, position } = task;
@@ -77,19 +77,24 @@ function Main() {
                 setShowModal(true);
             })
             .finally(() => {
-                setLoading(false); // Set loading to false when the test execution finishes
+                setLoading(false);
             });
     };
 
     const handleCloseModal = () => setShowModal(false);
 
-    // Delete WOP
-    // const handleDeleteTask = (taskId) => {
-    //     const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    //     setTasks(updatedTasks);
-    // };
+    const handleApplyPrediction = () => {
+        if (predicted_element) {
+            setTasks(tasks.map(task => {
+                if (predicted_element[task.access]) {
+                    return { ...task, selector: predicted_element[task.access] };
+                }
+                return task;
+            }));
+        }
+        setShowModal(false);
+    };
 
-    // Función para cambiar la vista
     const switchView = (view) => {
         setCurrentView(view);
     };
@@ -102,7 +107,6 @@ function Main() {
         return (
             <Container>
                 <Form>
-                    {/* Insert URL */}
                     <Form.Group className="formHolder" controlId='LinkURL'>
                         <Container className="center-logo">
                             <Col xs={6} md={12}>
@@ -116,7 +120,7 @@ function Main() {
                                 value={pageUrl}
                                 placeholder="[URL of the Page]"
                                 onChange={e => setPageUrl(e.target.value)}
-                                disabled={loading} // Disable input when loading
+                                disabled={loading}
                             />
                         </div>
                         <Form.Text className="text-muted">
@@ -128,30 +132,25 @@ function Main() {
                         <h1>List of Tests</h1>
                     </Container>
 
-                    {/* Main Container */}
                     <Container className="container">
                         <div className="todoBlock">
-                            {/* Tasks */}
                             <div className="todoList">
                                 {tasks.map((task) => (
-                                    // <Task key={task.id} task={task} onDelete={handleDeleteTask} /> Delet Handler WOP
                                     <Task key={task.id} task={task} />
                                 ))}
                                 <br /><br />
                             </div>
-                            {/* Buttons */}
                             <Container className="col_big">
                                 <Button onClick={handleAddTask} className="btn-primary" disabled={loading}>Add Test</Button>
                                 <Button onClick={handleRunTasks} id="FinishBtn" className="btn-primary" disabled={loading}>
                                     {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Execute Tests'}
                                 </Button>
-                                <Button onClick={() => switchView('history')} id="Versions" className="btn-primary" disabled={loading}>History Versions</Button> {/* WOP */}
+                                <Button onClick={() => switchView('history')} id="Versions" className="btn-primary" disabled={loading}>History Versions</Button>
                             </Container>
                         </div>
                     </Container>
                 </Form>
 
-                {/* Response Modal */}
                 <Modal show={showModal} onHide={handleCloseModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Test Result</Modal.Title>
@@ -160,13 +159,19 @@ function Main() {
                         <Alert variant={response === 'Test Ran Successfully' ? 'success' : 'danger'}>
                             {response}
                             {response !== 'Test Ran Successfully' && predicted_element && (
-                                <pre>{JSON.stringify(predicted_element, null, 2)}</pre>
+                                <div>
+                                    <pre>Predicted Element</pre><br></br>
+                                    <pre>{JSON.stringify(predicted_element, null, 2)}</pre>
+                                </div>
                             )}
                         </Alert>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleCloseModal}>
                             Close
+                        </Button>
+                        <Button variant="secondary" onClick={handleApplyPrediction}>
+                            Apply Prediction
                         </Button>
                     </Modal.Footer>
                 </Modal>
