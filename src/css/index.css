@@ -271,9 +271,9 @@ select option:checked{
 
 .white-block {
     background-color: white;
-    padding: 20px;
+    padding-top: 20px;
+	padding-bottom: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Opcional: Agregar sombra */
 	margin:0 auto;
 	width: fit-content;
    

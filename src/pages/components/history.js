@@ -18,6 +18,10 @@ function History({switchView, ipAddress, pageUrl}) {
         .catch(error => console.log(error));
     },[]);
 
+    useEffect(() => {
+        
+    },[history]);
+
 
     return(
         <Container className="history-container">
@@ -46,16 +50,16 @@ function History({switchView, ipAddress, pageUrl}) {
                     </tr>) : 
                     (history.map((test, index) => (
                         <tr key={index}>
-                            <td>{test.Id}</td>
-                            <td>{test.Timecreated}</td>
-                            <td>{test.Status}</td>
-                            <td>{test.EType}</td>
-                            <td>{test.Steps}</td>
+                            <td>{test.id}</td>
+                            <td>{test.timecreated}</td>
+                            <td>{test.status}</td>
+                            <td>{test.eType}</td>
+                            <td>{test.steps}</td>
                         </tr>
                     )))}
                     </tbody>
                 </Table>
-                {history.lenght > 0 && (
+                {history.length > 0 && (
                     <CSVLink data={history} filename={"test_history.csv"}>
                     <Button className="download-button">Download</Button>
                     </CSVLink>

@@ -3,7 +3,7 @@ import Logo from '../images/logo.png';
 import Task from './components/task';
 import History from './components/history.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Form, Alert, Modal, Col, Container, Image } from 'react-bootstrap';
+import { Button, Form, Alert, Modal, Col, Container, Image, Spinner } from 'react-bootstrap';
 import { CSVLink, CSVDownload } from 'react-csv';
 
 function Main() {
@@ -13,6 +13,8 @@ function Main() {
     const [response, setResponse] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [currentView, setCurrentView] = useState('main'); // Estado para la vista actual
+    const [loading, setLoading] = useState(false); // State for loading status
+    const [predicted_element, setPredictedelement] = useState(null);
 
     // Create new Task
     const handleAddTask = () => {
@@ -37,6 +39,7 @@ function Main() {
 
     // Run Tasks
     const handleRunTasks = () => {
+        setLoading(true); // Set loading to true when the test execution starts
         let pythonfile = [];
         for (let task of tasks) {
             let { access, selector, action, text, quantity, position } = task;
@@ -65,12 +68,16 @@ function Main() {
         fetch(url, options)
             .then((res) => res.json())
             .then((data) => {
+                setPredictedelement(data.Success ? null : data.PredictedElement)
                 setResponse(data.Success ? 'Test Ran Successfully' : `Test Had Errors: ${data.Results}`);
                 setShowModal(true);
             })
             .catch((err) => {
-                setResponse('Test Had Errors');
+                setResponse(`Test Had Errors: ${err}`);
                 setShowModal(true);
+            })
+            .finally(() => {
+                setLoading(false); // Set loading to false when the test execution finishes
             });
     };
 
@@ -91,9 +98,7 @@ function Main() {
         return (
             <History switchView={switchView} ipAddress={ipAddress} pageUrl={pageUrl}/>
         );
-    }
-    else{
-
+    } else {
         return (
             <Container>
                 <Form>
@@ -106,7 +111,13 @@ function Main() {
                             </Col>
                         </Container>
                         <div className="centered">
-                            <Form.Control type="URL" value={pageUrl} placeholder="[URL of the Page]" onChange={e => setPageUrl(e.target.value)} />
+                            <Form.Control
+                                type="URL"
+                                value={pageUrl}
+                                placeholder="[URL of the Page]"
+                                onChange={e => setPageUrl(e.target.value)}
+                                disabled={loading} // Disable input when loading
+                            />
                         </div>
                         <Form.Text className="text-muted">
                             Link of the Page.
@@ -130,9 +141,11 @@ function Main() {
                             </div>
                             {/* Buttons */}
                             <Container className="col_big">
-                                <Button onClick={handleAddTask} className="btn-primary">Add Test</Button>
-                                <Button onClick={handleRunTasks} id="FinishBtn" className="btn-primary">Execute Tests</Button>
-                                <Button onClick={() => switchView('history')} id="Versions" className="btn-primary">History Versions</Button> {/* WOP */}
+                                <Button onClick={handleAddTask} className="btn-primary" disabled={loading}>Add Test</Button>
+                                <Button onClick={handleRunTasks} id="FinishBtn" className="btn-primary" disabled={loading}>
+                                    {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Execute Tests'}
+                                </Button>
+                                <Button onClick={() => switchView('history')} id="Versions" className="btn-primary" disabled={loading}>History Versions</Button> {/* WOP */}
                             </Container>
                         </div>
                     </Container>
@@ -146,6 +159,9 @@ function Main() {
                     <Modal.Body>
                         <Alert variant={response === 'Test Ran Successfully' ? 'success' : 'danger'}>
                             {response}
+                            {response !== 'Test Ran Successfully' && predicted_element && (
+                                <pre>{JSON.stringify(predicted_element, null, 2)}</pre>
+                            )}
                         </Alert>
                     </Modal.Body>
                     <Modal.Footer>
