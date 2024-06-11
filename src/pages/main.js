@@ -55,7 +55,7 @@ function Main() {
             pythonfile.push(temp);
         }
         console.log(pythonfile)
-        const url = `http://localhost:5000/makeTest`;
+        const url = `http://10.22.198.111:5000/makeTest`;
         const data = {
             url: pageUrl,
             tasks: pythonfile,

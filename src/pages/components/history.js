@@ -9,7 +9,7 @@ function History({switchView, ipAddress, pageUrl}) {
 
     useEffect(() => {
         const encodedUrl = encodeURIComponent(pageUrl);
-        fetch(`http://127.0.0.1:5000/getHistory?TestId=${ipAddress}:${encodedUrl}`)
+        fetch(`http://10.22.198.111:5000/getHistory?TestId=${ipAddress}:${encodedUrl}`)
         .then( response => response.json())
         .then( 
             data => {setHistory(data.History);
@@ -53,7 +53,7 @@ function History({switchView, ipAddress, pageUrl}) {
                             <td>{test.id}</td>
                             <td>{test.timecreated}</td>
                             <td>{test.status}</td>
-                            <td>{test.eType}</td>
+                            <td>{test.etype}</td>
                             <td>{test.steps}</td>
                         </tr>
                     )))}
